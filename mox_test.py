@@ -16,10 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cStringIO
 import unittest
 import re
 import sys
+
+try:
+    import cStringIO
+except ImportError:
+    from io import StringIO as cStringIO
 
 import mox
 
@@ -307,7 +311,7 @@ class RegexTest(unittest.TestCase):
 
   def testReprWithoutFlags(self):
     """repr should return the regular expression pattern."""
-    self.assert_(repr(mox.Regex(r"a\s+b")) == "<regular expression 'a\s+b'>")
+    self.assert_(repr(mox.Regex(r"a\s+b")) == "<regular expression 'a\s+b', flags=32>")
 
   def testReprWithFlags(self):
     """repr should return the regular expression pattern and flags."""
@@ -2044,7 +2048,7 @@ class MoxTest(unittest.TestCase):
     # Forgot to replay!
     try:
       foo.GetBar().ShowMeTheMoney()
-    except AttributeError, e:
+    except AttributeError as e:
       self.assertEquals('MockMethod has no attribute "ShowMeTheMoney". '
           'Did you remember to put your mocks in replay mode?', str(e))
 
