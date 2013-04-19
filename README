@@ -1,3 +1,5 @@
+* Unofficial Python 3.3 fork
+
 Mox is an open source mock object framework for Python, inspired by
 the Java library EasyMock.
 
