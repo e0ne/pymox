@@ -1096,15 +1096,18 @@ class MockMethod(object):
 
     expected_method = self._VerifyMethodCall()
 
-    if expected_method._side_effects:
-      result = expected_method._side_effects(*params, **named_params)
-      if expected_method._return_value is None:
-        expected_method._return_value = result
+    if expected_method:
+      if expected_method._side_effects:
+        result = expected_method._side_effects(*params, **named_params)
+        if expected_method._return_value is None:
+          expected_method._return_value = result
 
-    if expected_method._exception:
-      raise expected_method._exception
+      if expected_method._exception:
+        raise expected_method._exception
 
-    return expected_method._return_value
+      return expected_method._return_value
+    else:
+     return None
 
   def __getattr__(self, name):
     """Raise an AttributeError with a helpful message."""
@@ -2128,7 +2131,7 @@ class MoxMetaTestBase(type):
     return new_method
 
 
-class MoxTestBase(unittest.TestCase, metaclass=MoxMetaTestBase):
+class MoxTestBase(unittest.TestCase):
   """Convenience test class to make stubbing easier.
 
   Sets up a "mox" attribute which is an instance of Mox (any mox tests will
@@ -2137,6 +2140,8 @@ class MoxTestBase(unittest.TestCase, metaclass=MoxMetaTestBase):
   mock methods have been called at the end of each test, eliminating boilerplate
   code.
   """
+
+  __metaclass__ = MoxMetaTestBase
 
   def setUp(self):
     super(MoxTestBase, self).setUp()

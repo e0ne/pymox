@@ -311,7 +311,7 @@ class RegexTest(unittest.TestCase):
 
   def testReprWithoutFlags(self):
     """repr should return the regular expression pattern."""
-    self.assert_(repr(mox.Regex(r"a\s+b")) == "<regular expression 'a\s+b', flags=32>")
+    self.assert_(repr(mox.Regex(r"a\s+b")) == "<regular expression 'a\s+b'>")
 
   def testReprWithFlags(self):
     """repr should return the regular expression pattern and flags."""
