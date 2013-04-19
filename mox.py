@@ -449,7 +449,7 @@ def Reset(*args):
     mock._Reset()
 
 
-class MockAnything:
+class MockAnything():
   """A mock that can be used to mock anything.
 
   This is helpful for mocking classes that do not provide a public interface.
@@ -521,6 +521,9 @@ class MockAnything:
   def __bool__(self):
     """Return 1 for nonzero so the mock can be used as a conditional."""
 
+    return 1
+
+  def __nonzero__(self):
     return 1
 
   def __eq__(self, rhs):
@@ -1093,7 +1096,6 @@ class MockMethod(object):
         self._checker.Check(params, named_params)
       self._call_queue.append(self)
       return self
-
     expected_method = self._VerifyMethodCall()
 
     if expected_method:
